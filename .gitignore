@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+vendor/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+.env
+
+celerybeat-schedule
+
+__pycache__
