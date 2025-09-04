@@ -26,6 +26,7 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - .:/app
+      - ./src:/app/src
       - ./data:/app/data
       - ./reports:/app/reports
   
@@ -41,6 +42,7 @@ services:
     command: celery -A celery_app worker --loglevel=info
     volumes:
       - .:/app
+      - ./src:/app/src
       - ./data:/app/data
       - ./reports:/app/reports
   
@@ -55,6 +57,7 @@ services:
     command: celery -A celery_app beat --loglevel=info
     volumes:
       - .:/app
+      - ./src:/app/src
       - ./data:/app/data
       - ./reports:/app/reports
 

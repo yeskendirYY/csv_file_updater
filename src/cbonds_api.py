@@ -9,7 +9,7 @@ def get_last_price(login:str, password:str, emitent_id:str):
         "filters": [
             {"field": "emitent_id", "operator": "eq", "value": f"{emitent_id}"}
         ],
-        "quantity": {"limit": 10, "offset": 0},
+        "quantity": {"limit": 500, "offset": 0},
         "sorting": [
             {"field": "trading_date", "order": "desc"}
             ],
