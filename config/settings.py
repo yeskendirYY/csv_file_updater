@@ -9,7 +9,7 @@ class Settings:
     REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", f"redis://{REDIS_HOST}:{REDIS_PORT}/0")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://{REDIS_HOST}:{REDIS_PORT}/0")
-    ROOT_PATH = os.getenv("LOGIN_CBONDS")
+    ROOT_PATH = os.getenv("ROOT_PATH")
     CBONDS_LOGIN = os.getenv("LOGIN_CBONDS")
     CBONDS_PASSWORD = os.getenv("PASSWORD_CBONDS")
 

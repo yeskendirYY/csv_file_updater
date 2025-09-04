@@ -36,8 +36,10 @@ def file_update(ticker: str, emitent_id):
 
     new_data = pl.DataFrame({
         "date": dates_cbond,
-        "price": [float(p) for p in prices_cbond]
-    })
+        "price": prices_cbond  # Keep as is, including None values
+    }).with_columns(
+        pl.col("price").cast(pl.Float64)  # Polars will convert None to null
+    )
 
     if dates_cbond and isinstance(dates_cbond[0], str):
         # If dates are strings, parse them to Date

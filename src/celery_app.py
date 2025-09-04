@@ -49,7 +49,7 @@ celery_app.conf.beat_schedule = {
 
 from tasks.file_update import file_update
 
-@celery_app.task(bind=True, name="celery_app.update_files_task")
+@celery_app.task(bind=True, name="src.celery_app.update_files_task")
 def update_files_task(self):
     results = []
     try:
