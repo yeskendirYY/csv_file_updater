@@ -1,14 +1,11 @@
 from fastapi import FastAPI, Response, HTTPException
-from pydantic import BaseModel
+from schemas import EmitentData
 from tasks.file_update import file_update
 from pathlib import Path
-from celery_app import celery_app, update_files_task
+from src.celery_app import celery_app, update_files_task
+from config.settings import Settings
 
-class EmitentData(BaseModel):
-    emitent_id: str
-    ticker: str
-
-app = FastAPI()
+app = FastAPI(root_path=Settings.ROOT_PATH)
 
 
 CURRENT_DIR = Path(__file__).parent
@@ -16,7 +13,7 @@ CURRENT_DIR = Path(__file__).parent
 
 
 
-@app.get("/health")
+@app.get("/health", include_in_schema=False)
 def health_check():
     try:
         stats = celery_app.control.inspect().stats()

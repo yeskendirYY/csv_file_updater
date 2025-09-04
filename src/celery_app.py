@@ -20,7 +20,7 @@ celery_app = Celery(
     "file_processor",
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND,
-    include=['celery_app'] # Include this module for task discovery
+    include=['src.celery_app'] # Include this module for task discovery
 )
 
 celery_app.conf.update(
@@ -34,7 +34,7 @@ celery_app.conf.update(
 
 celery_app.conf.beat_schedule = {
     "update-files-every-5-minutes": {
-        "task": "celery_app.update_files_task",
+        "task": "src.celery_app.update_files_task",
         "schedule": 300.0, # 5 minutes
         "options": {"max_retries": 3}
     }
