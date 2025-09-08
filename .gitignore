@@ -12,3 +12,5 @@ vendor/
 celerybeat-schedule
 
 __pycache__
+
+data_old/

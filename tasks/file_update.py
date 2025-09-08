@@ -9,8 +9,11 @@ logger = logging.getLogger(__name__)
 
 def file_update(ticker: str, emitent_id):
     PROJECT_ROOT = Path(__file__).parent.parent
-    CSV_FILE = PROJECT_ROOT / "data" / f"{ticker.lower()}.csv"
-
+    try:
+        CSV_FILE = PROJECT_ROOT / "data" / f"{ticker.lower()}.csv"
+    except Exception as e:
+        print(f"Error type: {e}")
+        return
     login = settings.CBONDS_LOGIN
     password = settings.CBONDS_PASSWORD
 
@@ -21,6 +24,7 @@ def file_update(ticker: str, emitent_id):
     except Exception as e:
         print(f"Error type: {type(e).__name__}")
         print(f"Error message: {e}")
+        return
 
     if df["date"].dtype == pl.Utf8:
         df = df.with_columns(pl.col("date").str.strptime(pl.Date, format="%Y-%m-%d", strict=False))

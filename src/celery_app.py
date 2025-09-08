@@ -6,11 +6,38 @@ import logging
 tickers = ["chmf", "ugld", "vtbr", "nlmk", "magn"]
 
 emitents = {
-    "chmf": 255,
-    "ugld": 9735,
-    "vtbr": 50,
-    "nlmk": 2529,
-    "magn": 33,
+    "chmf": 255, # severstal
+    "ugld": 9735, # южуралзолото
+    "vtbr": 50, # втб банк
+    "nlmk": 2529, # нлмк
+    "magn": 33, # mmk
+    "msgn": 126,# мосэнерго
+    "mdmg": 577465, # ??????? matiditya OR MD Medical Group Investments
+    "ydex": 10705, # yandex
+    "alrs": 18, # alrosa
+    "aflt": 19, # aeroflot
+    "gazp": 21, #gazprom not gazpromneft
+    "gmkn": 1546, # nornikel gmk
+    "astr": 557241, # astra
+    "irao": 3003, #interraoao
+    "lkoh": 128, #lukoil
+    "vkco": 277441, # vk mkpao
+    "rual": 74865, # rusal mkpao ok
+    "moex": 1032, # mosbirzha
+    "mtss": 122, # MTS
+    "nvtk": 765, # novatek
+    "pikk": 103, # pik ao
+    "plzl": 3681, # polus
+    "reni": 136463, # renessans straghovanie
+    "rosn": 123, # rosneft
+    "rtkm": 1577, # rostelecom
+    "sber": "sberbank", # sberbank
+    "svcb": "Sovcombank", # sovkombank
+    "flot": 2575, # sovkomflot
+    "sngs": 3694, # surgutneftegaz
+    "tatn": 30, # tatneft
+    "phor": 10836, # phosagro
+    "hhru": 563827, # headhunter
 }
 
 logging.basicConfig(level=logging.INFO)
@@ -55,7 +82,10 @@ def update_files_task(self):
     try:
         logger.info("Starting scheduled file update task")
         for ticker, emitent_id in emitents.items():
-            result = file_update(f"{ticker}", f"{emitent_id}")
+            try:
+                result = file_update(f"{ticker}", f"{emitent_id}")
+            except:
+                continue
             results.append(result)
         return result
     except Exception as e:

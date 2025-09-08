@@ -22,7 +22,7 @@ def get_last_price(login:str, password:str, emitent_id:str):
     resp = requests.get(
         MAIN_URL,
         json=payload,
-        timeout=90,
+        timeout=150,
         verify=False
     )
     resp.encoding = "utf-8"
