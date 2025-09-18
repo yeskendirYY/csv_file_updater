@@ -7,7 +7,7 @@ from config.settings import settings
 
 logger = logging.getLogger(__name__)
 
-def file_update(ticker: str, emitent_id):
+async def file_update(ticker: str, emitent_id):
     PROJECT_ROOT = Path(__file__).parent.parent
     try:
         CSV_FILE = PROJECT_ROOT / "data" / f"{ticker.lower()}.csv"
@@ -30,9 +30,10 @@ def file_update(ticker: str, emitent_id):
         df = df.with_columns(pl.col("date").str.strptime(pl.Date, format="%Y-%m-%d", strict=False))
 
     try:
-        dates_cbond, prices_cbond = get_last_price(login, password, emitent_id)
+        dates_cbond, prices_cbond = await get_last_price(login, password, emitent_id)
         logger.info(f"Fetched {len(dates_cbond)} records from CBonds API")
         # print(dates_cbond, prices_cbond)
+
     except Exception as e:
         logger.warning("No data received from CBonds API")
         return

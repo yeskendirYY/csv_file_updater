@@ -2,6 +2,7 @@ from celery import Celery, group, chain
 from celery.schedules import crontab
 from config.settings import settings
 import logging
+import asyncio
 
 tickers = ["chmf", "ugld", "vtbr", "nlmk", "magn"]
 
@@ -38,6 +39,17 @@ emitents = {
     "tatn": 30, # tatneft
     "phor": 10836, # phosagro
     "hhru": 563827, # headhunter
+    "posi": 271567, # iPositib
+    "bspb": "BANKSPB", # Bank SPB
+    "enpg": 88457, # En plus group
+    "afks": 212, # systema ao afk
+    "cbom": "MKB", # mkb moskow kredit bank
+    "fees": 1831, # fsk eas fskfees
+    "upro": 3677, #junipro
+    "sibn": 125, # gazpromneft
+    "cnru": 592375, # cian
+    "gemc": 563503, # umg mkpao
+    "aqua": 1840, # rusakva 
 }
 
 logging.basicConfig(level=logging.INFO)
@@ -83,7 +95,7 @@ def update_files_task(self):
         logger.info("Starting scheduled file update task")
         for ticker, emitent_id in emitents.items():
             try:
-                result = file_update(f"{ticker}", f"{emitent_id}")
+                result = asyncio.run(file_update(f"{ticker}", f"{emitent_id}"))
             except:
                 continue
             results.append(result)

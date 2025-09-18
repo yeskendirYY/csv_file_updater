@@ -1,7 +1,7 @@
-import requests
+import httpx
+import asyncio
 
-
-def get_last_price(login:str, password:str, emitent_id:str):
+async def get_last_price(login:str, password:str, emitent_id:str):
     MAIN_URL = (f"https://ws.cbonds.info/services/json/get_tradings_stocks_full_new/?lang=rus")
 
     payload = {
@@ -19,15 +19,22 @@ def get_last_price(login:str, password:str, emitent_id:str):
         ]
     }
 
-    resp = requests.get(
-        MAIN_URL,
-        json=payload,
-        timeout=150,
-        verify=False
-    )
-    resp.encoding = "utf-8"
-    resp.raise_for_status()
-    data = resp.json()
+    # resp = await requests.get(
+    #     MAIN_URL,
+    #     json=payload,
+    #     timeout=150,
+    #     verify=False
+    # )
+    # resp.encoding = "utf-8"
+    # resp.raise_for_status()
+    # data = resp.json()
+
+    async with httpx.AsyncClient(verify=False, timeout=150) as client:
+        resp = await client.get(MAIN_URL, json=payload)
+        resp.raise_for_status()
+        data = resp.json()
+
+    await asyncio.sleep(5)
 
     trading_dates = []
     last_prices = []
